@@ -32,3 +32,8 @@ body{
     align-items: center;
     font-size: 20px;
 }
+
+
+table{
+    width: 50px;
+}

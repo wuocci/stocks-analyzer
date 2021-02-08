@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import Papa from 'papaparse';
 import csvFile from '../sourcefile/HistoricalQuotes.csv';
 import moment from 'moment';
+import TableRow from './TableRow';
 
 
 
 function Stocks({startState, endState}) {
     const [rows, setRows] = useState([])
     let startingIndex = 0;
+    let endingIndex = 0;
 
     /*
      * Fetch the source file and parse the data to array of objects.
@@ -47,15 +49,37 @@ function Stocks({startState, endState}) {
         return dates;
     };
 
-    var dates = getDates(new Date(startState), new Date(endState));                                                                                                           
+    var dates = getDates(new Date(startState), new Date(endState)); 
+
+    /*
+    * Function to get the date indexes from the original array
+    *
+    * Then slice the original array to make the list for the table
+    */
+    const getIndexes = function () {
+        startingIndex = 0;
+        endingIndex = 0;
+        for(var i = 0; i < rows.length; i++){
+            for(var j = 0; j < dates.length; j++){
+                if(rows[i].Date == dates[j]){
+                    if(endingIndex != 0){
+                        startingIndex = i;
+                    }
+                    else{
+                        endingIndex = i;
+                    }
+                }
+            }
+        } 
+        return rows.slice(endingIndex -1, startingIndex +1);
+    }
 
     
-
+    var stockTableList = getIndexes();
     
-
     return (
       <div className="app">
-        
+          <TableRow stockTableList={stockTableList}/>
       </div>
     )
   }
