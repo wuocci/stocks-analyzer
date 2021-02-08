@@ -21,9 +21,6 @@ function GetButton({startingDate, endingDate}){
         setStart(moment(startingDate).format("MM/DD/YYYY"));
         setEnd(moment(endingDate).format("MM/DD/YYYY"));
         setOpen(true);
-        console.log(startState);
-        console.log(endState);
-        console.log(openStocks);
 
     }
 
