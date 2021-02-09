@@ -1,16 +1,18 @@
-import React from "react";
-import { useTable } from 'react-table'
+import React, {useEffect, useState} from "react";
+import { useTable, useSortBy } from 'react-table'
 
-function TableRow ({ stockTableList })  {
-
-    const data = []
-    stockTableList.map(item => data.push(item))
-
+function TableRow ({ data })  {
+  /*
+   * This component creates a sortable table from the used data.
+   *
+   * Table is from react-table library and has almost everything built-in.
+   */
     const columns = React.useMemo(
         () => [ 
           {
             Header: "Date",
             accessor: 'Date', // accessor is the "key" in the data 
+            sortType: 'basic' 
           }, 
           { 
             Header: 'Close/Last', 
@@ -41,26 +43,21 @@ function TableRow ({ stockTableList })  {
         headerGroups,  
         rows,  
         prepareRow,  
-      } = useTable({ columns, data})   
+      } = useTable({ columns, data}, useSortBy)   
 
 
       return (  
-        <table {...getTableProps()} style={{ border: 'solid 1px blue' }}>  
+        <table {...getTableProps()}>  
           <thead>  
             {headerGroups.map(headerGroup => (   
               <tr {...headerGroup.getHeaderGroupProps()}> 
                 {headerGroup.headers.map(column => (  
-                  <th  
-                    {...column.getHeaderProps()}
-                    style={{  
-                      borderBottom: 'solid 3px red',  
-                      background: 'aliceblue',   
-                      color: 'black',  
-                      fontWeight: 'bold',  
-                    }}  
-                  >  
-                    {column.render('Header')}  
-                  </th>   
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render('Header')}
+                  <span>
+                    {column.isSorted ? (column.isSortedDesc ? ' 🔽' : ' 🔼') : ''}
+                  </span>
+                </th>
                 ))}  
               </tr>  
             ))}  
@@ -74,11 +71,6 @@ function TableRow ({ stockTableList })  {
                     return (   
                       <td   
                         {...cell.getCellProps()}  
-                        style={{  
-                          padding: '10px', 
-                          border: 'solid 1px gray',  
-                          background: 'papayawhip' 
-                        }}   
                       >
                         {cell.render('Cell')}
                       </td> 

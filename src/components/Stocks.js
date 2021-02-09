@@ -3,6 +3,7 @@ import Papa from 'papaparse';
 import csvFile from '../sourcefile/HistoricalQuotes.csv';
 import moment from 'moment';
 import TableRow from './TableRow';
+import loader from "../loader.gif";
 
 
 
@@ -10,6 +11,7 @@ function Stocks({startState, endState}) {
     const [rows, setRows] = useState([])
     let startingIndex = 0;
     let endingIndex = 0;
+    const [filledList, setList] = useState(false);
 
     /*
      * Fetch the source file and parse the data to array of objects.
@@ -23,7 +25,11 @@ function Stocks({startState, endState}) {
             const csv = decoder.decode(result.value) // the csv text
             const results = Papa.parse(csv, { header: true }) // object with { data, errors, meta }
             const rows = results.data // array of objects
-            setRows(rows)
+            const timer = setTimeout(() => {
+                setRows(rows)
+                setList(true);
+            }, 2000);
+            
         }
         getData()
     }, []) 
@@ -34,6 +40,7 @@ function Stocks({startState, endState}) {
     *
     * Used in when finding the starting index from the original array.
     */
+
     var getDates = function(startDate, endDate) {
         var dates = [],
             currentDate = startDate,
@@ -75,13 +82,22 @@ function Stocks({startState, endState}) {
     }
 
     
-    var stockTableList = getIndexes();
     
-    return (
-      <div className="app">
-          <TableRow stockTableList={stockTableList}/>
-      </div>
-    )
+    if(filledList == true){
+        var data = getIndexes();
+        return (
+        <div className="stockTable">
+            <TableRow data={data}/>
+        </div>
+        )
+    }
+    else{
+        return(
+            <div>
+                <img className="loader" alt="Loader for table" src={loader}></img>
+            </div>
+        )
+    }
   }
 
 

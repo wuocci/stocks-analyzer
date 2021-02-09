@@ -26,9 +26,9 @@ function GetButton({startingDate, endingDate}){
 
     if(openStocks === false){
         return(
-            <div className="getButton">
-            <button type="submit" onClick={selectDates}>Get data</button>
-        </div>
+            <div className="getButton2">
+                <button type="submit" className="getButton" onClick={selectDates}>Get data</button>
+            </div>
         )
     }
     else{
