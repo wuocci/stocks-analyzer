@@ -33,7 +33,18 @@ function TableRow ({ data })  {
           {  
             Header: 'Low' ,
             accessor: 'Low',   
-          },  
+          },
+          {  
+            Header: 'SMA 5' ,
+            accessor: 'SMA 5',   
+          },
+          {  
+            Header: 'Price Change' ,
+            accessor: 'Price Change',   
+          },
+            
+            
+
         ], 
         []  
       )

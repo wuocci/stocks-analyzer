@@ -5,8 +5,6 @@ import moment from 'moment';
 import TableRow from './TableRow';
 import loader from "../loader.gif";
 
-
-
 function Stocks({startState, endState}) {
     const [rows, setRows] = useState([])
     let startingIndex = 0;
@@ -28,7 +26,8 @@ function Stocks({startState, endState}) {
             const timer = setTimeout(() => {
                 setRows(rows)
                 setList(true);
-            }, 2000);
+                countSmaValue();
+            }, 3000);
             
         }
         getData()
@@ -36,11 +35,14 @@ function Stocks({startState, endState}) {
 
      
     /*
-    * Create an array of the given dates.
-    *
-    * Used in when finding the starting index from the original array.
-    */
 
+    Create an array of the given dates.
+    
+    Used in when finding the starting index from the original array.
+
+    @return array of dates.
+
+    */
     var getDates = function(startDate, endDate) {
         var dates = [],
             currentDate = startDate,
@@ -56,16 +58,21 @@ function Stocks({startState, endState}) {
         return dates;
     };
 
-    var dates = getDates(new Date(startState), new Date(endState)); 
 
-    /*
-    * Function to get the date indexes from the original array
-    *
-    * Then slice the original array to make the list for the table
+
+
+    /* 
+
+    Function to get the date indexes from the original array
+
+    @return slice of the original array to make the list for the table.
+
     */
     const getIndexes = function () {
+        var dates = getDates(new Date(startState), new Date(endState)); 
         startingIndex = 0;
         endingIndex = 0;
+        var addSma = countSmaValue();
         for(var i = 0; i < rows.length; i++){
             for(var j = 0; j < dates.length; j++){
                 if(rows[i].Date == dates[j]){
@@ -77,17 +84,91 @@ function Stocks({startState, endState}) {
                     }
                 }
             }
-        } 
+            rows[i]["SMA 5"] = addSma[i] + " %";
+        }
         return rows.slice(endingIndex -1, startingIndex +1);
+    }
+
+
+    /*
+     Function to count the SMA values from 5 days. 
+
+     (big spaghettious warnings)
+    
+     @return is a list for the percentage value of every value on the array object.
+
+     */
+    const countSmaValue = function () {
+        var total = [];         //list of number N1-N5
+        var sum = 0;            //sum of the numbers N1-N5
+        var avg = 0;            //average of the numbers N1-N5
+        var percent2 = 0;       // calculated percent
+        var replacedClose = ""; //replace the '$' in the Close/Last data
+        var replacedOpen = "";  //replace the '$' in the Open data
+        var smaValues = [];     //SMA values list (percentages)
+        var replacedOpens = []; // replaced Open values in list (used in % calculations)
+
+        // Loop through the data.
+        for(var i = 0; i < rows.length; i++){
+            replacedOpen = rows[i].Open.replace('$', '');
+            replacedOpens.push(replacedOpen);
+            for(var j = i; j < rows.length -1; j++){
+                replacedClose = rows[j]["Close/Last"].replace('$', '');
+                total.push(replacedClose);
+                if(total.length == 5){
+                    for(var k = 0; k < total.length; k++){
+                        sum += Number(total[k]);
+                    }
+                    avg = sum / total.length // count the SMA average.
+                    percent2 =  replacedOpens[i] / avg; // count the percent value.
+                    var percent = Math.round(percent2 * 100) / 100; //rounded percent
+                    smaValues.push(percent); //push percent in list
+
+                    //null everything after 5 rounds.
+                    total = [];
+                    percent = 0;
+                    avg = 0;
+                    sum = 0;
+                    break;
+                }
+            }
+        }
+        return smaValues;
+    }
+    
+
+    /*
+
+    Function to count the price differences between High and Low values.
+
+    Append the value straight to the data.
+
+    @return the list
+
+    */
+    const countDifferences = function () {
+        var data2 = getIndexes();
+        var replaceHigh = "";
+        var replaceLow = "";
+        var priceChange = 0;
+        for(var i = 0; i < data2.length; i++){
+            replaceHigh = data2[i].High.replace('$', '');
+            replaceLow = data2[i].Low.replace('$', '');
+            priceChange = Math.abs(replaceHigh - replaceLow);
+            var priceChangeRound = Math.round(priceChange * 100) / 100;
+            data2[i]['Price Change'] = priceChangeRound;
+        }
+        return data2;
     }
 
     
     
     if(filledList == true){
-        var data = getIndexes();
+        var data = countDifferences();
+        console.log(rows);
         return (
         <div className="stockTable">
-            <TableRow data={data}/>
+            <TableRow data={data}/> 
         </div>
         )
     }
