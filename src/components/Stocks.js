@@ -4,12 +4,15 @@ import csvFile from '../sourcefile/HistoricalQuotes.csv';
 import moment from 'moment';
 import TableRow from './TableRow';
 import loader from "../loader.gif";
+import Trends from "./Trends";
+import App from "./App";
 
 function Stocks({startState, endState}) {
     const [rows, setRows] = useState([])
     let startingIndex = 0;
     let endingIndex = 0;
     const [filledList, setList] = useState(false);
+    const [resetMainMenu, setReset] = useState(false);
 
     /*
      * Fetch the source file and parse the data to array of objects.
@@ -41,6 +44,7 @@ function Stocks({startState, endState}) {
     Used in when finding the starting index from the original array.
 
     @return array of dates.
+    @param the dates
 
     */
     var getDates = function(startDate, endDate) {
@@ -161,20 +165,37 @@ function Stocks({startState, endState}) {
         return data2;
     }
 
+
+    const goToStart = () => {
+        setReset(true);
+    }
+
+
     
-    
-    if(filledList == true){
+    if(filledList == true && resetMainMenu == false){
         var data = countDifferences();
-        console.log(rows);
-        return (
-        <div className="stockTable">
-            <TableRow data={data}/> 
-        </div>
+        console.log(startState);
+        return ( 
+            <div className ="results">
+                <Trends data={data}
+                startState={startState}
+                endState={endState}/>
+                <div className="stockTable">
+                    <TableRow data={data}/> 
+                </div>
+                <button type="submit" className="resetButton" onClick={goToStart}>New Search</button>
+            </div>
+        )
+    }
+    else if(resetMainMenu == true){
+        return(
+            <App/>
         )
     }
     else{
         return(
-            <div>
+            <div className="loaderDiv">
+                <p>Just a quick load. Please wait...</p>
                 <img className="loader" alt="Loader for table" src={loader}></img>
             </div>
         )

@@ -31,11 +31,24 @@ body{
     justify-content: center;
     align-items: center;
     margin: auto;
+    padding: 10px;
+}
+
+.results{
+    margin-top: 200px;
+}
+
+.dates{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 }
 
 input{
     height: 30px;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .getButton{
@@ -49,14 +62,19 @@ input{
     height: 40px;
     width: 150px;
     border-radius: 10px;
-    background-color: aliceblue;
+    background-color: rgb(117, 187, 157);
     border: solid 1px black;
 }
 
 .getButton:hover{
+    transform: scale(1.1);
     cursor: pointer;
     background-color: green;
     color: white;
+}
+
+.getButton2 p{
+    color: red;
 }
 
 .stockTable{
@@ -64,16 +82,15 @@ input{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
     margin: auto;
-    width: 100%;
-    border: 1px solid black;
+    margin-top: 100px;
 }
 
 td{
     border: 1px solid black;
     padding: 5px;
 }
+
 
 .loader{
     display: flex;
@@ -83,4 +100,12 @@ td{
     margin: auto;
     margin-top: 20px;
 
+}
+.loaderDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 200px;
 }

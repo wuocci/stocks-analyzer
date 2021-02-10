@@ -1,6 +1,6 @@
 import '../App.css';
 import InputFields from './InputFields.js';
-
+import React, { useState } from 'react';
 
 /*
  * Just a simple App component which has titles. 
@@ -10,17 +10,11 @@ import InputFields from './InputFields.js';
 */
 
 function App() {
-  return(
-    <div>
-      <div className="title">
-        <h1>Welcome to the stock market data analyzer!</h1>
-        <p>Please input dates to find data.</p>
-      </div>
-      <div className="inputfields">
-        <InputFields/>
-      </div>
-      
-    </div>
-  )
-}
+    return(
+        <div className="inputfields">
+          <InputFields/>
+        </div>
+    )
+  }
+  
 export default App;
