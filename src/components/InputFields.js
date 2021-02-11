@@ -6,21 +6,23 @@ import moment from 'moment';
 
 
 function InputFields() {
-    //States for the dates.
     const [startingDate, setDate] = useState(null);
     const [endingDate, setEndDate] = useState(null);
     const [openStocks, setOpen] = useState(false);  
     const [startState, setStart] = useState("");
     const [endState, setEnd] = useState(""); 
-    const [wrongInput, setInput] = useState(false);
+    //const [wrongInput, setInput] = useState(false);
     const [isActive, setActive] = useState(true);
+
+    var wrongInput = false;
 
 
     /*
-     * Handle the inputs from selected dates with separate arrow
-     * functions.
-     */
+        Handle the inputs from selected dates with separate arrow
+        functions.
 
+        @param event
+     */
     const handleInput = (event) =>  {
         setDate(event);
 
@@ -29,28 +31,40 @@ function InputFields() {
         setEndDate(event);
     }
 
-      /*
+    /*
         Format the selected and returned date objects to string. 
     
         Easiest way (and propably the only way) 
         to get data from the source file and filter it.
-     */
-
+    */
     const selectDates = () => {
         if(startingDate == null || endingDate == null ){
-            setInput(true);
+            console.log(startingDate, endingDate);
+            wrongInput = true;
+            setOpen(false);
+            console.log(openStocks, wrongInput);
         }
         else{
             setStart(moment(startingDate).format("MM/DD/YYYY"));
             setEnd(moment(endingDate).format("MM/DD/YYYY"));
+            setActive(!isActive)
             setOpen(true);
-            setInput(false);
         }
-        setActive(!isActive)
+
     }
     
+    /*  
+        RENDERS:
 
-    if(openStocks === false && wrongInput == false && isActive){
+        -If everything is fine and we still need an input, render the whole
+        thing.
+        
+        -Else if render the error text if wrongInput == true.
+
+        -Else render the next (stocks) component. 
+
+    */
+    if(isActive){
         return(
             <div>
                 <div className="title">
@@ -81,15 +95,16 @@ function InputFields() {
                         onChange={handleInput2}
                     />
                 </div>
-                    {wrongInput ? (
-                         <div className="getButton2">
+                    {wrongInput ? ( 
+                    <div className="getButton2">
                         <p>Please give valid dates to see data!</p>
                         <button type="submit" className="getButton" onClick={selectDates}>Get data</button>
-                    </div>) : (
+                     </div>               
+                    ) : (
                         <div className="getButton2">
                         <button type="submit" className="getButton" onClick={selectDates}>Get data</button>
                     </div>)}
-                </div>
+            </div>
             )
         }
     else{

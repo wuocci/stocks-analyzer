@@ -7,12 +7,15 @@ import loader from "../loader.gif";
 import Trends from "./Trends";
 import App from "./App";
 
+
 function Stocks({startState, endState}) {
     const [rows, setRows] = useState([])
     let startingIndex = 0;
     let endingIndex = 0;
     const [filledList, setList] = useState(false);
     const [resetMainMenu, setReset] = useState(false);
+    var dataList = true;
+    
 
     /*
      * Fetch the source file and parse the data to array of objects.
@@ -27,11 +30,11 @@ function Stocks({startState, endState}) {
             const results = Papa.parse(csv, { header: true }) // object with { data, errors, meta }
             const rows = results.data // array of objects
             const timer = setTimeout(() => {
-                setRows(rows)
+                setRows(rows);
                 setList(true);
-                countSmaValue();
+                countSmaValue()
             }, 3000);
-            
+
         }
         getData()
     }, []) 
@@ -63,8 +66,6 @@ function Stocks({startState, endState}) {
     };
 
 
-
-
     /* 
 
     Function to get the date indexes from the original array
@@ -73,12 +74,12 @@ function Stocks({startState, endState}) {
 
     */
     const getIndexes = function () {
-        var dates = getDates(new Date(startState), new Date(endState)); 
+        var dates = getDates(new Date(startState), new Date(endState));
         startingIndex = 0;
         endingIndex = 0;
         var addSma = countSmaValue();
         for(var i = 0; i < rows.length; i++){
-            for(var j = 0; j < dates.length; j++){
+               for(var j = 0; j < dates.length; j++){
                 if(rows[i].Date == dates[j]){
                     if(endingIndex != 0){
                         startingIndex = i;
@@ -87,10 +88,11 @@ function Stocks({startState, endState}) {
                         endingIndex = i;
                     }
                 }
+            } 
+                rows[i]["SMA 5"] = addSma[i] + " %";
             }
-            rows[i]["SMA 5"] = addSma[i] + " %";
-        }
-        return rows.slice(endingIndex -1, startingIndex +1);
+            return rows.slice(endingIndex, startingIndex +1)
+
     }
 
 
@@ -116,7 +118,7 @@ function Stocks({startState, endState}) {
         for(var i = 0; i < rows.length; i++){
             replacedOpen = rows[i].Open.replace('$', '');
             replacedOpens.push(replacedOpen);
-            for(var j = i; j < rows.length -1; j++){
+            for(var j = i; j <= rows.length -1; j++){
                 replacedClose = rows[j]["Close/Last"].replace('$', '');
                 total.push(replacedClose);
                 if(total.length == 5){
@@ -170,11 +172,8 @@ function Stocks({startState, endState}) {
         setReset(true);
     }
 
-
-    
     if(filledList == true && resetMainMenu == false){
         var data = countDifferences();
-        console.log(startState);
         return ( 
             <div className ="results">
                 <Trends data={data}
@@ -184,7 +183,7 @@ function Stocks({startState, endState}) {
                     <TableRow data={data}/> 
                 </div>
                 <button type="submit" className="resetButton" onClick={goToStart}>New Search</button>
-            </div>
+             </div>
         )
     }
     else if(resetMainMenu == true){
