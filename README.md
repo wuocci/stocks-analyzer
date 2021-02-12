@@ -10,9 +10,9 @@ Added a few styles to make it not look so default.
 
 HOW-TO (Pretty hard to use)
 
-    Select dates
-    Wait 3sec (for making sure the 'fetch' is complete) and enjoy data which you can sort the way want.
-    Search again if necessary.
+    1. Select dates
+    2. Wait 3sec (for making sure the 'fetch' is complete) and enjoy data which you can sort the way want.
+    3. Search again if necessary.
 
 BUGS etc.
 
