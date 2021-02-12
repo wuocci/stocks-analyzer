@@ -85,13 +85,13 @@ function Stocks({startState, endState}) {
     */
     const getIndexes = function () {
         var dates = getDates(new Date(startState), new Date(endState));
-        startingIndex = 0;
-        endingIndex = 0;
+        startingIndex = null;
+        endingIndex = null;
         var addSma = countSmaValue();
         for(var i = 0; i < rows.length; i++){
                for(var j = 0; j < dates.length; j++){
                 if(rows[i].Date == dates[j]){
-                    if(endingIndex != 0){
+                    if(endingIndex != null){
                         startingIndex = i;
                     }
                     else{
