@@ -8,18 +8,28 @@ import Trends from "./Trends";
 import App from "./App";
 
 
+
+/*
+
+Component for getting the stocks data and handling it.
+    
+Functions for all of the sorting etc.
+
+*/
+
 function Stocks({startState, endState}) {
     const [rows, setRows] = useState([])
     let startingIndex = 0;
     let endingIndex = 0;
     const [filledList, setList] = useState(false);
     const [resetMainMenu, setReset] = useState(false);
-    var dataList = true;
     
 
     /*
-     * Fetch the source file and parse the data to array of objects.
-     */
+
+    "Fetch" the source file and parse the data to array of objects.
+
+    */
     React.useEffect(() => {
         async function getData() {
             const response = await fetch(csvFile)
@@ -30,10 +40,10 @@ function Stocks({startState, endState}) {
             const results = Papa.parse(csv, { header: true }) // object with { data, errors, meta }
             const rows = results.data // array of objects
             const timer = setTimeout(() => {
-                setRows(rows);
                 setList(true);
                 countSmaValue()
-            }, 3000);
+            }, 3000); //let's add a loader with setTimeOut for the sake of it. 
+            setRows(rows);
 
         }
         getData()
@@ -127,7 +137,8 @@ function Stocks({startState, endState}) {
                     }
                     avg = sum / total.length // count the SMA average.
                     percent2 =  replacedOpens[i] / avg; // count the percent value.
-                    var percent = Math.round(percent2 * 100) / 100; //rounded percent
+                    percent2 = percent2 * 100;
+                    var percent = Math.round(percent2) / 100 ; //rounded percent
                     smaValues.push(percent); //push percent in list
 
                     //null everything after 5 rounds.

@@ -4,24 +4,28 @@ import "react-datepicker/dist/react-datepicker.css";
 import Stocks from './Stocks';
 import moment from 'moment';
 
+/*
 
+Component which renders and handles the inputs in the beginning.
+
+*/
 function InputFields() {
     const [startingDate, setDate] = useState(null);
     const [endingDate, setEndDate] = useState(null);
-    const [openStocks, setOpen] = useState(false);  
     const [startState, setStart] = useState("");
     const [endState, setEnd] = useState(""); 
-    //const [wrongInput, setInput] = useState(false);
     const [isActive, setActive] = useState(true);
 
     var wrongInput = false;
 
 
     /*
-        Handle the inputs from selected dates with separate arrow
-        functions.
+    
+    Handle the inputs from selected dates with separate arrow
+    functions.
 
-        @param event
+    @param event
+
      */
     const handleInput = (event) =>  {
         setDate(event);
@@ -32,36 +36,33 @@ function InputFields() {
     }
 
     /*
-        Format the selected and returned date objects to string. 
+    Format the selected and returned date objects to string. 
     
-        Easiest way (and propably the only way) 
-        to get data from the source file and filter it.
+    Easiest way (and propably the only way) 
+    to get data from the source file and filter it.
+
     */
     const selectDates = () => {
         if(startingDate == null || endingDate == null ){
-            console.log(startingDate, endingDate);
             wrongInput = true;
-            setOpen(false);
-            console.log(openStocks, wrongInput);
+            alert("Please choose valid dates!");
         }
         else{
             setStart(moment(startingDate).format("MM/DD/YYYY"));
             setEnd(moment(endingDate).format("MM/DD/YYYY"));
             setActive(!isActive)
-            setOpen(true);
         }
 
     }
     
     /*  
-        RENDERS:
+    RENDERS:
 
-        -If everything is fine and we still need an input, render the whole
-        thing.
+    -If everything is fine and we still need an input, render the whole
+    thing.
         
-        -Else if render the error text if wrongInput == true.
 
-        -Else render the next (stocks) component. 
+    -Else render the next (stocks) component. 
 
     */
     if(isActive){
@@ -94,17 +95,11 @@ function InputFields() {
                         maxDate={new Date(2021, 0, 20)}
                         onChange={handleInput2}
                     />
-                </div>
-                    {wrongInput ? ( 
+                </div>  
                     <div className="getButton2">
-                        <p>Please give valid dates to see data!</p>
                         <button type="submit" className="getButton" onClick={selectDates}>Get data</button>
-                     </div>               
-                    ) : (
-                        <div className="getButton2">
-                        <button type="submit" className="getButton" onClick={selectDates}>Get data</button>
-                    </div>)}
-            </div>
+                    </div>
+                </div>
             )
         }
     else{

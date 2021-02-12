@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 
 
+/*
+
+Component for the upward trend thing.
+
+*/
 
 function Trends ({ data, startState, endState}) {
     var trendValues = []; 
@@ -8,11 +13,12 @@ function Trends ({ data, startState, endState}) {
 
 
     /*
-        Function for getting the upward trend days in a row.
+    Function for getting the upward trend days in a row.
 
-        Hassle with lists and loops.
+    Hassle with lists and loops.
 
-        @return the max value of list (max days upward) 
+    @return the max value of list (max days upward) 
+
     */
     const countTheTrend = function () {
         trendValues = [];
@@ -40,7 +46,8 @@ function Trends ({ data, startState, endState}) {
 
     return(
         <div className="textBox">
-            <h3>In Apple stock historical data the Close/Last price increased {countTheTrend()} days in a row between {startState} and {endState}.</h3>
+            <h3>In Apple stock historical data the Close/Last price increased {countTheTrend() +" "} 
+             days in a row between {startState} and {endState}.</h3>
             <p>Click on the headers in the table to sort the columns.</p>
             <p>Use SHIFT + click to sort multiple columns. </p>
         </div>
