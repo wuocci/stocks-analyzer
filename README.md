@@ -16,4 +16,4 @@ HOW-TO (Pretty hard to use)
 
 BUGS etc.
 
-Solid working thing. Minor bugs with dates: there are times where there is no data between given dates and the application shows data from the last day possible (01.20.2021).
+Solid working thing. Minor bugs with dates: there are times where there is no data between given dates and the application shows data from the last day possible (01.20.2021). Sometimes there might error in reading the data which I have not try/catched.
