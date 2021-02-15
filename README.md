@@ -4,7 +4,7 @@ Apple's historical stock market data analyzer. ReactJS
 
 INFO
 
-Analyzes historical apple stock market data and sorts it the way user wants. This implementation is probably not what was thought, but I think it is minimum viable product with lightweight table component. It does what is asked (at least I think :D). 
+Analyzes historical apple stock market data and sorts it the way the user wants. This implementation is probably not what was thought, but I think it is minimum viable product with lightweight table component. It does what is asked (at least I think :D). 
 
 
 
