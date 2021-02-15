@@ -10,8 +10,11 @@ Features implemented:
 
 -Sorting the table
 -SMA 5 implementation: 5 days simple moving average between closing and opening prices counted in percentage.
+
 -Price change bewteen high and low in the specific day's stock price.
+
 -Counted the upward trend (how many days stock price was going up in a row).
+
 
 Added a few styles to make it not look so default.
 
