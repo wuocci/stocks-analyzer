@@ -6,6 +6,8 @@ INFO
 
 Analyzes historical apple stock market data and sorts it the way user wants. This implementation is probably not what was thought, but I think it is minimum viable product with lightweight table component. It does what is asked (at least I think :D). 
 
+
+
 Features implemented: 
 
 -Sorting the table
@@ -17,6 +19,9 @@ Features implemented:
 
 
 Added a few styles to make it not look so default.
+
+
+
 
 HOW-TO (Pretty hard to use)
 
