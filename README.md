@@ -10,7 +10,7 @@ Analyzes historical apple stock market data and sorts it the way user wants. Thi
 
 Features implemented: 
 
--Sorting the table
+-Sorting the table.
 
 -SMA 5 implementation: 5 days simple moving average between closing and opening prices counted in percentage.
 
