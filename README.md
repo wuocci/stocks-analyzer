@@ -16,7 +16,7 @@ Features implemented:
 
 -Price change bewteen high and low in the specific day's stock price.
 
--Counted the upward trend (how many days stock price was going up in a row).
+-Counted the upward trend (how many days the stock price was going up in a row).
 
 
 Added a few styles to make it not look so default.
