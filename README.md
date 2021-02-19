@@ -1,5 +1,3 @@
-Stock analyzer for Scrooge McDuck.
-
 Apple's historical stock market data analyzer. ReactJS
 
 INFO
